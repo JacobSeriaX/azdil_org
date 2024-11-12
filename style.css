@@ -1,0 +1,436 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Шапка */
+header {
+    background-color: #ff5722;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 150px;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Заголовок */
+h1 {
+    font-size: 2.5rem;
+    color: #ff5722;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Блок поиска и фильтрации */
+.search-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 25px;
+}
+
+.search-bar input {
+    padding: 12px 20px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #ff5722;
+    box-shadow: 0 0 8px rgba(255, 87, 34, 0.2);
+    outline: none;
+}
+
+.filter-sort {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-sort select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filter-sort select:focus {
+    border-color: #ff5722;
+    box-shadow: 0 0 8px rgba(255, 87, 34, 0.2);
+    outline: none;
+}
+
+/* Контейнер с заказами */
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.orders-column {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.orders-column:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #ff5722;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #ff5722;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+.order {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.order:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопки на карточке заказа */
+.order .delete-btn,
+.order .edit-btn,
+.order .status-btn {
+    position: absolute;
+    top: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.order .delete-btn {
+    right: 10px;
+    color: #e53935;
+}
+
+.order .edit-btn {
+    right: 40px;
+    color: #1976d2;
+}
+
+.order .status-btn {
+    right: 70px;
+    color: #ff9800;
+}
+
+.order .delete-btn:hover {
+    color: #b71c1c;
+}
+
+.order .edit-btn:hover {
+    color: #0d47a1;
+}
+
+.order .status-btn:hover {
+    color: #f57c00;
+}
+
+/* Анимации мигания для дедлайна */
+.blink-yellow {
+    animation: blink-yellow 1s infinite;
+}
+
+.blink-red {
+    animation: blink-red 1s infinite;
+}
+
+.blink-maroon {
+    animation: blink-maroon 1s infinite;
+}
+
+/* Анимация мигания зелёным для готовых заказов */
+.blink-green {
+    animation: blink-green 1s infinite;
+}
+
+@keyframes blink-yellow {
+    0%, 100% { background-color: #fffde7; color: #000; }
+    50% { background-color: #fff; color: #000; }
+}
+
+@keyframes blink-red {
+    0%, 100% { background-color: #ffcdd2; }
+    50% { background-color: #fff; }
+}
+
+@keyframes blink-maroon {
+    0%, 100% { background-color: #b71c1c; color: #fff; }
+    50% { background-color: #fff; color: #000; }
+}
+
+@keyframes blink-green {
+    0%, 100% { background-color: #c8e6c9; }
+    50% { background-color: #fff; }
+}
+
+/* Кнопка оформления заказа */
+.btn {
+    padding: 14px 28px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 25px 0;
+    width: 100%;
+    max-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn:hover {
+    background-color: #e64a19;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Модальные окна */
+.modal {
+    display: none; /* Скрыты по умолчанию */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Используем Flexbox для центрирования */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 35px 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 90vh; /* Ограничение по высоте */
+    overflow-y: auto; /* Прокрутка при переполнении */
+    animation: fadeIn 0.3s ease; /* Анимация появления */
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #ff5722;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #e64a19;
+}
+
+/* Стиль для отображения информации о заказе */
+.order-info {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.order-info strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Стиль формы в модальном окне */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-group input, 
+.form-group textarea {
+    padding: 12px 18px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #ff5722;
+    box-shadow: 0 0 8px rgba(255, 87, 34, 0.2);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+button.btn {
+    padding: 14px;
+    font-size: 1.1rem;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+button.btn:hover {
+    background-color: #e64a19;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95); /* Добавлен небольшой масштаб */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 1000px;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-filter {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-sort {
+        justify-content: center;
+    }
+
+    .orders-column {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 25px 30px;
+    }
+
+    .btn {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-bar input {
+        max-width: 100%;
+    }
+
+    .filter-sort select {
+        max-width: 100%;
+    }
+
+    .order-info {
+        font-size: 0.95rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    button.btn, .btn {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}

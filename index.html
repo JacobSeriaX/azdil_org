@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Система управления заказами</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Подключение стилей -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <!-- Firebase App (основной SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <!-- Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <img src="logo.png" alt="Логотип" class="logo">
+    </header>
+
+    <!-- Заголовок -->
+    <h1>Система управления заказами</h1>
+
+    <!-- Поиск и фильтрация -->
+    <div class="search-filter">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Поиск заказов..." onkeyup="searchOrders()">
+        </div>
+        <div class="filter-sort">
+            <select id="filterStatus" onchange="filterOrders()">
+                <option value="all">Все заказы</option>
+                <option value="waiting">В ожидании</option>
+                <option value="completed">Готовые</option>
+            </select>
+            <select id="sortOrders" onchange="sortOrders()">
+                <option value="dateAsc">Сортировать по дате (возр.)</option>
+                <option value="dateDesc">Сортировать по дате (убыв.)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Контейнер с заказами -->
+    <div class="container">
+        <div class="orders-column" id="waiting-orders-column">
+            <h2 class="section-title">Заказы в ожидании</h2>
+            <div id="waiting-orders" class="orders"></div>
+        </div>
+        <div class="orders-column" id="completed-orders-column">
+            <h2 class="section-title">Готовые заказы</h2>
+            <div id="completed-orders" class="orders"></div>
+        </div>
+    </div>
+
+    <!-- Кнопка оформления заказа -->
+    <button class="btn" onclick="openOrderForm()">Оформить заказ</button>
+
+    <!-- Модальное окно оформления заказа -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFormModal()">&times;</span>
+            <h2>Новый заказ</h2>
+            <form id="newOrderForm">
+                <div class="form-group">
+                    <label for="name">Имя клиента</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="text" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="size">Размер</label>
+                    <input type="text" id="size" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Количество</label>
+                    <input type="number" id="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Компания</label>
+                    <input type="text" id="company" required>
+                </div>
+                <div class="form-group">
+                    <label for="deadline">Дедлайн</label>
+                    <input type="date" id="deadline" required>
+                </div>
+                <div class="form-group">
+                    <label for="note">Заметка</label>
+                    <textarea id="note"></textarea>
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно информации о заказе -->
+    <div id="orderInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderInfoModal()">&times;</span>
+            <h2>Информация о заказе</h2>
+            <div class="order-info">
+                <strong>Имя клиента:</strong>
+                <p id="orderInfoName"></p>
+                <strong>Телефон:</strong>
+                <p id="orderInfoPhone"></p>
+                <strong>Размер:</strong>
+                <p id="orderInfoSize"></p>
+                <strong>Количество:</strong>
+                <p id="orderInfoQuantity"></p>
+                <strong>Компания:</strong>
+                <p id="orderInfoCompany"></p>
+                <strong>Дедлайн:</strong>
+                <p id="orderInfoDeadline"></p>
+                <strong>Заметка:</strong>
+                <p id="orderInfoNote"></p>
+            </div>
+            <button class="btn" onclick="openEditOrderForm()">Редактировать</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования заказа -->
+    <div id="editOrderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditOrderModal()">&times;</span>
+            <h2>Редактировать заказ</h2>
+            <form id="editOrderForm">
+                <div class="form-group">
+                    <label for="editName">Имя клиента</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Телефон</label>
+                    <input type="text" id="editPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSize">Размер</label>
+                    <input type="text" id="editSize" required>
+                </div>
+                <div class="form-group">
+                    <label for="editQuantity">Количество</label>
+                    <input type="number" id="editQuantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="editCompany">Компания</label>
+                    <input type="text" id="editCompany" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDeadline">Дедлайн</label>
+                    <input type="date" id="editDeadline" required>
+                </div>
+                <div class="form-group">
+                    <label for="editNote">Заметка</label>
+                    <textarea id="editNote"></textarea>
+                </div>
+                <button type="submit" class="btn">Сохранить изменения</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов -->
+    <script src="script.js"></script>
+</body>
+</html>
